@@ -13,8 +13,13 @@ const mongoose = require("mongoose");
 // Require routes
 const workoutRoutes = require("./routes/workouts");
 
+// Require cors
+const cors = require("cors");
 // Set up the express app
 const app = express();
+
+// Allow requests from all origins (for development only)
+app.use(cors());
 
 // Middleware:
 // any code that executes between us getting a request on the server
@@ -38,6 +43,7 @@ app.use("/api/workouts", workoutRoutes);
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
+    console.log("Connected to DB");
     // Listen for requests
     app.listen(process.env.PORT, () => {
       console.log("Connected to DB & listening on port", process.env.PORT);
